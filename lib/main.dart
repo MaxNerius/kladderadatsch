@@ -11,19 +11,19 @@ class Kladderadatsch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AppState(),
+      create: (context) => NotesModel(),
       child: MaterialApp(
         title: 'kladderadatsch',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        home: HomePageController(),
       ),
     );
   }
 }
 
-class AppState extends ChangeNotifier {
+class NotesModel extends ChangeNotifier {
   List<Note> notes = [
     Note(title: "Henlo, world!"),
     Note(title: "Lorem ipsum"),
@@ -31,8 +31,8 @@ class AppState extends ChangeNotifier {
   ];
 }
 
-class TodoCard extends StatelessWidget {
-  const TodoCard({super.key, required this.note});
+class TodoCardView extends StatelessWidget {
+  const TodoCardView({super.key, required this.note});
   final Note note;
 
   @override
@@ -56,21 +56,21 @@ class DrawerView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
+    var appState = context.watch<NotesModel>();
 
     return Container(
       child: ListView(
         children: [
           for (var todo in appState.notes)
-            TodoCard(note: todo),
+            TodoCardView(note: todo),
         ],
       ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePageController extends StatelessWidget {
+  const HomePageController({super.key});
   
   @override
   Widget build(BuildContext context) {
