@@ -100,7 +100,10 @@ class NoteCreationRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create new note')),
+      appBar: AppBar(
+        title: const Text('Create new note'),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
         child: NoteEditForm(),
       ),
