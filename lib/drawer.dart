@@ -65,11 +65,13 @@ class TodoCardDetailRoute extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Details'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: Placeholder(),
-        ),
+      body: Column(
+        children: [
+          // FIXME: styling!
+          Text(note.title),
+          Padding(padding: EdgeInsets.all(30)),
+          Text(note.content)
+        ],
       ),
     );
   }
