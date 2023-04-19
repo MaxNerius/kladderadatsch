@@ -31,8 +31,8 @@ class NotesModel extends ChangeNotifier {
   ];
 }
 
-class TodoCardView extends StatelessWidget {
-  const TodoCardView({super.key, required this.note});
+class TodoCardRoute extends StatelessWidget {
+  const TodoCardRoute({super.key, required this.note});
   final Note note;
 
   @override
@@ -43,7 +43,7 @@ class TodoCardView extends StatelessWidget {
         subtitle: Text(note.content ?? 'Placeholder'),
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TodoCardDetailView(note: note)),
+          MaterialPageRoute(builder: (context) => TodoCardDetailRoute(note: note)),
         ),
         leading: TextButton(
           child: Icon(Icons.delete),
@@ -54,8 +54,8 @@ class TodoCardView extends StatelessWidget {
   }
 }
 
-class TodoCardDetailView extends StatelessWidget {
-  const TodoCardDetailView({super.key, required this.note});
+class TodoCardDetailRoute extends StatelessWidget {
+  const TodoCardDetailRoute({super.key, required this.note});
   final Note note;
 
   @override
@@ -67,15 +67,15 @@ class TodoCardDetailView extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Go back'),
+          child: Placeholder(),
         ),
       ),
     );
   }
 }
 
-class DrawerView extends StatelessWidget {
-  const DrawerView({super.key});
+class DrawerRoute extends StatelessWidget {
+  const DrawerRoute({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class DrawerView extends StatelessWidget {
         child: child ?? ListView(
           children: [
             for (var todo in notesState.notes)
-              TodoCardView(note: todo),
+              TodoCardRoute(note: todo),
           ],
         ),
       ),
@@ -101,7 +101,7 @@ class HomePageController extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Kladderadatsch -- Inbox"),
       ),
-      body: DrawerView(),
+      body: DrawerRoute(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => print("TODO: launch note creation page"),
         tooltip: "Add a new note",
