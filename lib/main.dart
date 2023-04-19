@@ -97,6 +97,8 @@ class DrawerRoute extends StatelessWidget {
     return Consumer<NotesModel>(
       builder: (context, notesState, _) => ListView(
         children: [
+          if (notesState.notes.isEmpty)
+            Center(child: const Text('Currently, there aren\'t any notes')),
           for (var todo in notesState.notes)
             TodoCardRoute(note: todo),
         ],
