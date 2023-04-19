@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 
 class Note {
   String title;
-  String? content;
+  String content;
 
-  Note({this.title = "TODO", this.content});
+  Note({this.title = "TODO", this.content = "Foo bar"});
 }
 
 class NotesModel extends ChangeNotifier {
