@@ -93,12 +93,27 @@ class DrawerRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<NotesModel>(
-      builder: (context, notesState, child) => Container(
-        child: child ?? ListView(
-          children: [
-            for (var todo in notesState.notes)
-              TodoCardRoute(note: todo),
-          ],
+      builder: (context, notesState, _) => ListView(
+        children: [
+          for (var todo in notesState.notes)
+            TodoCardRoute(note: todo),
+        ],
+      ),
+    );
+  }
+}
+
+class NoteCreationRoute extends StatelessWidget {
+  const NoteCreationRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Create new note')),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Finish'),
+          onPressed: () => Navigator.pop(context, Note(title: 'I come from the CreationRoute!')),
         ),
       ),
     );
@@ -110,17 +125,30 @@ class HomePageController extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Kladderadatsch -- Inbox"),
-      ),
-      body: DrawerRoute(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => print("TODO: launch note creation page"),
-        tooltip: "Add a new note",
-        child: const Icon(Icons.add),
+    return Consumer<NotesModel>(builder: (context, notesState, _) =>
+      Scaffold(
+        appBar: AppBar(
+          title: const Text("Kladderadatsch -- Inbox"),
+        ),
+        body: DrawerRoute(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Note res = await _navigateNoteCreationRoute(context);
+            notesState.addNote(res);
+          },
+          tooltip: "Add a new note",
+          child: const Icon(Icons.add),
+        ),
       ),
     );
+  }
+
+  Future<Note> _navigateNoteCreationRoute(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (contex) => NoteCreationRoute()),
+    );
+    return result;
   }
 }
 
