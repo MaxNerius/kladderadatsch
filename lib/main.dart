@@ -79,15 +79,14 @@ class DrawerView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    // FIXME: wrap the returned `Widget` with a `Consumer`
-    var appState = context.watch<NotesModel>();
-
-    return Container(
-      child: ListView(
-        children: [
-          for (var todo in appState.notes)
-            TodoCardView(note: todo),
-        ],
+    return Consumer<NotesModel>(
+      builder: (context, notesState, child) => Container(
+        child: child ?? ListView(
+          children: [
+            for (var todo in notesState.notes)
+              TodoCardView(note: todo),
+          ],
+        ),
       ),
     );
   }
