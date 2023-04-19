@@ -24,11 +24,24 @@ class Kladderadatsch extends StatelessWidget {
 }
 
 class NotesModel extends ChangeNotifier {
-  List<Note> notes = [
+  List<Note> _notes = [
     Note(title: "Henlo, world!"),
     Note(title: "Lorem ipsum"),
     Note(title: "Foo bar baz"),
   ];
+
+  List<Note> get notes => _notes;
+
+  void addNote(Note note) {
+    _notes.add(note);
+    notifyListeners();
+  }
+
+  void removeNote(Note note) {
+    if (!_notes.contains(note)) return;
+    _notes.remove(note);
+    notifyListeners();
+  }
 }
 
 class TodoCardRoute extends StatelessWidget {
