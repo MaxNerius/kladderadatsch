@@ -58,9 +58,11 @@ class TodoCardRoute extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => TodoCardDetailRoute(note: note)),
         ),
-        leading: TextButton(
-          child: Icon(Icons.delete),
-          onPressed: () => print('TODO: implement deletion of notes'),
+        leading: Consumer<NotesModel>(
+          builder: (context, notesState, _) => TextButton(
+            child: Icon(Icons.delete),
+            onPressed: () => notesState.removeNote(note),
+          ),
         ),
       ),
     );
