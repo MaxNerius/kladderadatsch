@@ -41,10 +41,33 @@ class TodoCardView extends StatelessWidget {
       child: ListTile(
         title: Text(note.title),
         subtitle: Text(note.content ?? 'Placeholder'),
-        onTap: () => print('TODO: Launch view with note details'),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TodoCardDetailView(note: note)),
+        ),
         leading: TextButton(
           child: Icon(Icons.delete),
           onPressed: () => print('TODO: implement deletion of notes'),
+        ),
+      ),
+    );
+  }
+}
+
+class TodoCardDetailView extends StatelessWidget {
+  const TodoCardDetailView({super.key, required this.note});
+  final Note note;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      appBar: AppBar(
+        title: const Text('Placeholder'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back'),
         ),
       ),
     );
@@ -56,6 +79,7 @@ class DrawerView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    // FIXME: wrap the returned `Widget` with a `Consumer`
     var appState = context.watch<NotesModel>();
 
     return Container(
